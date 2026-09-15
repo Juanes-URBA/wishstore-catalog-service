@@ -1,0 +1,166 @@
+{
+  "info": {
+    "name": "wishstore-catalog-service",
+    "description": "Colección Postman para el microservicio wishstore-catalog-service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "productId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Listar productos",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/products"
+      }
+    },
+    {
+      "name": "Buscar por ID - existente",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/products/{{productId}}"
+      }
+    },
+    {
+      "name": "Buscar por ID - inexistente",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/products/99999"
+      }
+    },
+    {
+      "name": "Crear producto - correcto",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/products",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Camiseta básica\",\n  \"description\": \"Camiseta básica de algodón\",\n  \"price\": 45000.00,\n  \"stock\": 20,\n  \"category\": \"Ropa\",\n  \"image\": \"https://ejemplo.com/camiseta.jpg\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Crear producto - nombre duplicado",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/products",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Camiseta básica\",\n  \"description\": \"Otra camiseta con el mismo nombre\",\n  \"price\": 39000.00,\n  \"stock\": 5,\n  \"category\": \"Ropa\",\n  \"image\": null\n}"
+        }
+      }
+    },
+    {
+      "name": "Crear producto - datos inválidos",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/products",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"\",\n  \"description\": \"\",\n  \"price\": -10,\n  \"stock\": -5,\n  \"category\": \"\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Actualizar producto - existente",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/products/{{productId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Camiseta básica actualizada\",\n  \"description\": \"Camiseta básica de algodón, edición actualizada\",\n  \"price\": 47000.00,\n  \"stock\": 25,\n  \"category\": \"Ropa\",\n  \"image\": \"https://ejemplo.com/camiseta-v2.jpg\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Actualizar producto - inexistente",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/products/99999",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Producto fantasma\",\n  \"description\": \"No debería existir\",\n  \"price\": 10000.00,\n  \"stock\": 1,\n  \"category\": \"Ropa\",\n  \"image\": null\n}"
+        }
+      }
+    },
+    {
+      "name": "Eliminar producto",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/products/{{productId}}"
+      }
+    },
+    {
+      "name": "Eliminar producto - inexistente",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/products/99999"
+      }
+    },
+    {
+      "name": "Buscar por categoría",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/products/category/Ropa"
+      }
+    },
+    {
+      "name": "Buscar por nombre",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/products/search?name=camiseta"
+      }
+    },
+    {
+      "name": "Actualizar stock - correcto",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/products/{{productId}}/stock",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"stock\": 50\n}"
+        }
+      }
+    },
+    {
+      "name": "Actualizar stock - negativo",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/products/{{productId}}/stock",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"stock\": -10\n}"
+        }
+      }
+    }
+  ]
+}
